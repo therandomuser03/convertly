@@ -21,5 +21,5 @@ We use conventional commits:
 - `test:` testing
 - `refactor:` code refactoring
 
-## Issue Guidelines
-[Templates and guidelines for reporting issues]
+<!-- ## Issue Guidelines
+[Templates and guidelines for reporting issues] -->
