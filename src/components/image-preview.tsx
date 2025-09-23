@@ -2,6 +2,7 @@ import React from 'react';
 import { ImageIcon } from 'lucide-react';
 import { ProcessedImage } from '@/../types/index';
 import { formatFileSize, calculateCompressionRatio } from '../lib/utils';
+import Image from 'next/image';
 
 interface ImagePreviewProps {
   originalFile: File;
@@ -41,7 +42,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
         <h3 className="text-lg font-medium text-primary">Processed</h3>
         <div className="border rounded-lg overflow-hidden bg-background aspect-video">
           {processedImage ? (
-            <img
+            <Image
               src={processedImage.processedUrl}
               alt="Processed"
               className="w-full h-full object-contain"
@@ -70,7 +71,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
           </div>
         ) : (
           <div className="space-y-1">
-            <div className="text-sm text-gray-400">Click "Process Image" to see results</div>
+            <div className="text-sm text-gray-400">Click &ldquo;Process Image&rdquo; to see results</div>
           </div>
         )}
       </div>

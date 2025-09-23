@@ -43,10 +43,10 @@ export const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
     onOptionsChange({ ...options, width: numWidth });
   };
 
-  const handleHeightChange = (height: string) => {
-    const numHeight = height ? parseInt(height) : undefined;
-    onOptionsChange({ ...options, height: numHeight });
-  };
+  // const handleHeightChange = (height: string) => {
+  //   const numHeight = height ? parseInt(height) : undefined;
+  //   onOptionsChange({ ...options, height: numHeight });
+  // };
 
   return (
     <div className="grid md:grid-cols-4 gap-4 p-4 bg-accent 50 rounded-lg">
