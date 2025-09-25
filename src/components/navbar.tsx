@@ -8,9 +8,6 @@ export default function Navbar() {
       <h1 className="text-2xl font-bold text-primary cursor-pointer">Convertly</h1>
       </Link>
       <nav className="flex gap-6 text-primary justify-center items-center font-medium">
-        {/* <a href="#">Compress</a> */}
-        {/* <a href="#">Convert</a> */}
-        {/* <a href="#">Resize</a> */}
         <ModeToggle />
       </nav>
     </div>

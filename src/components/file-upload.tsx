@@ -55,30 +55,33 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect, className 
 
   return (
     <div
-      className={`border-2 border-dashed rounded-xl p-12 text-center transition-all cursor-pointer ${
-        dragOver 
-          ? 'border-blue-500 bg-blue-50' 
-          : 'border-gray-300 hover:border-gray-400'
-      } ${className}`}
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-      onClick={handleClick}
-    >
-      <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-      <h3 className="text-lg font-medium text-primary mb-2">
-        Drop your image here or click to select
-      </h3>
-      <p className="text-accent-foreground">
-        Supports JPEG, PNG, and WebP files up to 50MB
-      </p>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleFileInputChange}
-        className="hidden"
-      />
-    </div>
+  className={`border-2 border-dashed rounded-xl p-12 text-center transition-all cursor-pointer
+    ${
+      dragOver
+        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/40'
+        : 'border-gray-300 hover:border-gray-400 hover:bg-blue-50 dark:hover:bg-blue-950/30'
+    }
+    ${className}`}
+  onDragOver={handleDragOver}
+  onDragLeave={handleDragLeave}
+  onDrop={handleDrop}
+  onClick={handleClick}
+>
+  <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+  <h3 className="text-lg font-medium text-primary mb-2">
+    Drop your image here or click to select
+  </h3>
+  <p className="text-accent-foreground">
+    Supports JPEG, PNG, and WEBP files up to 50MB
+  </p>
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    onChange={handleFileInputChange}
+    className="hidden"
+  />
+</div>
+
   );
 };
