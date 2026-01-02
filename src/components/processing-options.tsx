@@ -78,6 +78,9 @@ export const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
       <div>
         <label className="block text-sm font-medium text-primary mb-5">
           Quality: {options.quality}%
+          {options.format === 'png' && (
+            <span className="text-xs text-amber-600 ml-2">(PNG is lossless)</span>
+          )}
         </label>
         <Slider
           value={[options.quality]}
@@ -85,7 +88,7 @@ export const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
           min={10}
           step={1}
           onValueChange={(value: number[]) => handleQualityChange(value[0])}
-          disabled={disabled}
+          disabled={disabled || options.format === 'png'}
           className="w-full"
         />
       </div>

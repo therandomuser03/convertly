@@ -44,8 +44,12 @@ export const useImageProcessor = () => {
             ctx.clearRect(0, 0, width, height);
             ctx.drawImage(img, 0, 0, width, height);
 
-            const mimeType = `image/${options.format}`;
-            const quality = options.quality / 100;
+            // PNG is lossless and doesn't support quality compression
+            // Quality parameter only works for JPEG and WebP (0.0-1.0 scale)
+            const format = options.format;
+            const mimeType = format === 'jpeg' ? 'image/jpeg' : `image/${format}`;
+            const supportsQuality = format === 'jpeg' || format === 'webp';
+            const quality = supportsQuality ? options.quality / 100 : undefined;
 
             canvas.toBlob(
               (blob) => {
