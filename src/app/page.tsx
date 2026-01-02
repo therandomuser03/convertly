@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { useTheme } from "next-themes"; // ✅ Import theme hook
 import { ProcessedImage, ProcessingOptions } from "@/../types";
 import { FileUpload } from "@/components/file-upload";
 import { ProcessingOptions as ProcessingOptionsComponent } from "@/components/processing-options";
@@ -14,7 +13,6 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
 export default function ConvertlyApp() {
-  const { theme } = useTheme(); // ✅ Get current theme (light/dark)
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [processedImage, setProcessedImage] = useState<ProcessedImage | undefined>(undefined);

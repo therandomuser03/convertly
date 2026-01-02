@@ -34,7 +34,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
 
         <div className="border border-border/50 rounded-xl overflow-hidden bg-muted/20 aspect-video shadow-sm relative group">
           <div className="absolute inset-0 bg-[url('/checker-pattern.png')] opacity-5" />
-          <img
+          <Image
             src={URL.createObjectURL(originalFile)}
             alt="Original"
             className="w-full h-full object-contain relative z-10 p-2 transition-transform duration-500 group-hover:scale-105"
