@@ -2,6 +2,8 @@
 
 > Free, open-source image compression and conversion tool
 
+<img width="2944" height="1844" alt="convertly-image vercel app_" src="https://github.com/user-attachments/assets/b35488c5-a690-441a-927f-e14d3bae40b9" />
+
 ## Features
 - ✨ Compress images without quality loss
 - 🔄 Convert between formats (PNG, JPEG, WebP)
