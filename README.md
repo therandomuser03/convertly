@@ -1,4 +1,4 @@
-# Convertly 🚀
+# Convertly
 
 > A modern, fast, and privacy-focused file conversion platform built with Next.js and React. Convertly enables users to compress and convert files directly in the browser with a clean and responsive interface.
 
