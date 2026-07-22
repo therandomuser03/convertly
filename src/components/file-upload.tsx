@@ -3,6 +3,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Upload } from 'lucide-react';
 import { validateFile } from '../lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
@@ -54,34 +55,49 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileSelect, className 
   };
 
   return (
-    <div
-  className={`border-2 border-dashed rounded-xl p-12 text-center transition-all cursor-pointer
-    ${
-      dragOver
-        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/40'
-        : 'border-gray-300 hover:border-gray-400 hover:bg-blue-50 dark:hover:bg-blue-950/30'
-    }
-    ${className}`}
-  onDragOver={handleDragOver}
-  onDragLeave={handleDragLeave}
-  onDrop={handleDrop}
-  onClick={handleClick}
->
-  <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-  <h3 className="text-lg font-medium text-primary mb-2">
-    Drop your image here or click to select
-  </h3>
-  <p className="text-accent-foreground">
-    Supports JPEG, PNG, and WEBP files up to 50MB
-  </p>
-  <input
-    ref={fileInputRef}
-    type="file"
-    accept="image/*"
-    onChange={handleFileInputChange}
-    className="hidden"
-  />
-</div>
+    <motion.div
+      whileHover="hover"
+      animate={dragOver ? "drag" : "idle"}
+      variants={{
+        idle: { scale: 1 },
+        hover: { scale: 1.01 },
+        drag: { scale: 1.02 }
+      }}
+      className={`relative overflow-hidden border border-hairline/60 dark:border-white/10 rounded-[14px] p-6 sm:p-12 text-center cursor-pointer flex flex-col items-center justify-center min-h-[320px] bg-surface-soft/40 hover:bg-canvas/50 backdrop-blur-lg transition-all duration-300
+        ${className}`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      onClick={handleClick}
+    >
+      <motion.div
+        variants={{
+          idle: { y: 0, scale: 1 },
+          hover: { y: -5, scale: 1.05 },
+          drag: { y: -10, scale: 1.1 }
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="relative z-10 bg-canvas/60 dark:bg-white/10 backdrop-blur-md p-5 rounded-full mb-6 border border-hairline/60 dark:border-white/10 shadow-sm"
+      >
+        <Upload className="h-10 w-10 text-ink" strokeWidth={1.5} />
+      </motion.div>
+      
+      <div className="relative z-10 space-y-2">
+        <h3 className="text-xl font-medium text-ink tracking-tight">
+          Click to upload or drag and drop
+        </h3>
+        <p className="text-muted-foreground text-sm max-w-[280px] mx-auto leading-relaxed">
+          Supports WebP, JPEG, PNG, and AVIF up to 50MB.
+        </p>
+      </div>
 
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/avif"
+        onChange={handleFileInputChange}
+        className="hidden"
+      />
+    </motion.div>
   );
 };

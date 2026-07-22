@@ -45,10 +45,10 @@ export const useImageProcessor = () => {
             ctx.drawImage(img, 0, 0, width, height);
 
             // PNG is lossless and doesn't support quality compression
-            // Quality parameter only works for JPEG and WebP (0.0-1.0 scale)
+            // Quality parameter works for JPEG, WebP, and AVIF (0.0-1.0 scale)
             const format = options.format;
             const mimeType = format === 'jpeg' ? 'image/jpeg' : `image/${format}`;
-            const supportsQuality = format === 'jpeg' || format === 'webp';
+            const supportsQuality = format === 'jpeg' || format === 'webp' || format === 'avif';
             const quality = supportsQuality ? options.quality / 100 : undefined;
 
             canvas.toBlob(

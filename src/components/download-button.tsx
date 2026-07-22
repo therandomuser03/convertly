@@ -24,8 +24,8 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
   const baseClasses = 'flex items-center gap-2 font-medium rounded-lg transition-colors';
   
   const variantClasses = {
-    primary: 'bg-green-600 text-white hover:bg-green-700',
-    secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+    primary: 'bg-gradient-to-r from-primary to-primary/80 text-white hover:shadow-lg hover:shadow-primary/30 hover:-translate-y-0.5',
+    secondary: 'bg-accent text-foreground hover:bg-secondary border border-border'
   };
 
   const sizeClasses = {

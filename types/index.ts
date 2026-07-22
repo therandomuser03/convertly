@@ -9,13 +9,13 @@ export interface ProcessedImage {
 }
 
 export interface ProcessingOptions {
-  format: 'jpeg' | 'png' | 'webp';
+  format: 'jpeg' | 'png' | 'webp' | 'avif';
   quality: number;
   width?: number;
   height?: number;
 }
 
-export type SupportedFormat = 'jpeg' | 'png' | 'webp';
+export type SupportedFormat = 'jpeg' | 'png' | 'webp' | 'avif';
 
 export interface FileValidationResult {
   isValid: boolean;

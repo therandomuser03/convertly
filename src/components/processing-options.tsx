@@ -43,16 +43,11 @@ export const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
     onOptionsChange({ ...options, width: numWidth });
   };
 
-  // const handleHeightChange = (height: string) => {
-  //   const numHeight = height ? parseInt(height) : undefined;
-  //   onOptionsChange({ ...options, height: numHeight });
-  // };
-
   return (
-    <div className="grid md:grid-cols-4 gap-4 p-4 bg-accent 50 rounded-lg">
+    <div className="grid md:grid-cols-1 gap-6">
       {/* Format Selection */}
-      <div>
-        <label className="block text-sm font-medium text-primary mb-2">
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-ink">
           Output Format
         </label>
         <Select
@@ -60,28 +55,34 @@ export const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
           onValueChange={(value: SupportedFormat) => handleFormatChange(value)}
           disabled={disabled}
         >
-          <SelectTrigger className="w-[180px] border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100">
+          <SelectTrigger className="w-full bg-canvas border-hairline focus:ring-primary/40 transition-all rounded-[8px] h-10 text-ink">
             <SelectValue placeholder="Select format" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="rounded-[8px] border-hairline shadow-xl bg-canvas text-ink">
             <SelectGroup>
-              <SelectLabel>Formats</SelectLabel>
-              <SelectItem value="jpeg">JPEG</SelectItem>
-              <SelectItem value="png">PNG</SelectItem>
-              <SelectItem value="webp">WEBP</SelectItem>
+              <SelectLabel className="text-muted text-xs uppercase tracking-widest font-medium">Formats</SelectLabel>
+              <SelectItem value="jpeg" className="rounded-md cursor-pointer hover:bg-surface-soft focus:bg-surface-soft focus:text-ink">JPEG</SelectItem>
+              <SelectItem value="png" className="rounded-md cursor-pointer hover:bg-surface-soft focus:bg-surface-soft focus:text-ink">PNG</SelectItem>
+              <SelectItem value="webp" className="rounded-md cursor-pointer hover:bg-surface-soft focus:bg-surface-soft focus:text-ink">WEBP</SelectItem>
+              <SelectItem value="avif" className="rounded-md cursor-pointer hover:bg-surface-soft focus:bg-surface-soft focus:text-ink">AVIF</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
       </div>
 
       {/* Quality Slider */}
-      <div>
-        <label className="block text-sm font-medium text-primary mb-5">
-          Quality: {options.quality}%
-          {options.format === 'png' && (
-            <span className="text-xs text-amber-600 ml-2">(PNG is lossless)</span>
-          )}
-        </label>
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <label className="text-sm font-medium text-ink flex items-center gap-2">
+            Quality
+            {options.format === 'png' && (
+              <span className="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded-full font-mono border border-primary/20 font-medium">LOSSLESS</span>
+            )}
+          </label>
+          <span className="text-sm font-mono text-muted bg-canvas border border-hairline px-2 py-0.5 rounded-[4px]">
+            {options.quality}%
+          </span>
+        </div>
         <Slider
           value={[options.quality]}
           max={100}
@@ -89,32 +90,40 @@ export const ProcessingOptions: React.FC<ProcessingOptionsProps> = ({
           step={1}
           onValueChange={(value: number[]) => handleQualityChange(value[0])}
           disabled={disabled || options.format === 'png'}
-          className="w-full"
+          className="w-full py-2 [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_[role=slider]]:border-primary [&_[role=slider]]:shadow-none [&_[role=slider]]:bg-primary"
         />
       </div>
 
       {/* Width Input */}
-      <div>
-        <label className="block text-sm font-medium text-primary mb-2">
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-ink">
           Width (px)
         </label>
-        <input
-          type="number"
-          placeholder="Auto"
-          value={options.width || ""}
-          onChange={(e) => handleWidthChange(e.target.value)}
-          disabled={disabled}
-          className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
-        />
+        <div className="relative">
+          <input
+            type="number"
+            placeholder="Auto"
+            value={options.width || ""}
+            onChange={(e) => handleWidthChange(e.target.value)}
+            disabled={disabled}
+            className="w-full h-10 px-3 bg-canvas border border-hairline rounded-[8px] focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all disabled:opacity-50 text-ink placeholder:text-muted"
+          />
+          {!options.width && (
+            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] tracking-wider font-mono text-muted pointer-events-none bg-surface-soft px-1.5 py-0.5 rounded">AUTO</span>
+          )}
+        </div>
       </div>
 
       {/* Process Button */}
-      <div className="flex items-end">
+      <div className="flex items-end mt-4">
         <button
           onClick={onProcess}
           disabled={isProcessing || disabled}
-          className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors"
+          className="w-full h-10 bg-primary text-on-primary font-medium rounded-[8px] hover:bg-primary-active transition-colors disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 overflow-hidden relative"
         >
+          {isProcessing && (
+            <div className="absolute inset-0 bg-white/10 translate-x-[-100%] animate-[shimmer_1.5s_infinite]" />
+          )}
           {isProcessing ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />

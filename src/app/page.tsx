@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Sparkles } from "lucide-react";
 import { ProcessedImage, ProcessingOptions } from "@/../types";
 import { FileUpload } from "@/components/file-upload";
 import { ProcessingOptions as ProcessingOptionsComponent } from "@/components/processing-options";
@@ -11,6 +11,7 @@ import { DownloadButton } from "@/components/download-button";
 import { useImageProcessor } from "@/../hooks/useImageProcessor";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import Silk from "@/components/Silk";
 
 export default function ConvertlyApp() {
 
@@ -54,117 +55,134 @@ export default function ConvertlyApp() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
+    <div className="flex flex-col min-h-screen bg-background selection:bg-primary/20 relative">
+      {/* Upper Page Container containing Navbar and Main area */}
+      <div className="relative flex flex-col flex-1 overflow-hidden">
+        {/* Ambient Silk Background Effect */}
+        <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-30 overflow-hidden z-0">
+          <Silk
+            speed={5}
+            scale={1}
+            color="#cc785c"
+            noiseIntensity={1.5}
+            rotation={0}
+          />
+        </div>
 
-      <main className="relative flex-1 flex flex-col items-center justify-center p-6">
-        {/* Background Layer */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-40 bg-[url('/bg-gradient.png')] dark:bg-[url('/bg-gradient-dark.png')] transition-all duration-500"
-        />
+        <Navbar />
 
-        {/* Content Layer */}
-        <div className="relative w-full">
-          <motion.div
-            layout
-            className={`w-full mx-auto ${selectedFile ? "max-w-5xl" : "max-w-2xl"}`}
-          >
-            <AnimatePresence mode="wait">
-              {!selectedFile ? (
-                <motion.div
-                  key="upload"
-                  layout
-                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  className="bg-accent/60 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20 text-center hover:border-blue-400/50 transition duration-300"
-                >
-                  <div className="mb-6">
-                    <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 pb-2">
-                      Image Tools & Converter
-                    </h2>
-                    <p className="text-muted-foreground text-lg">
-                      Free, fast, and secure local image processing
-                    </p>
-                  </div>
-                  <FileUpload onFileSelect={handleFileSelect} />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="processing"
-                  layout
-                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  className="bg-card/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/10"
-                >
-                  {/* Header */}
-                  <div className="flex justify-between items-center p-6 border-b border-border/50 bg-muted/30">
-                    <div>
-                      <h2 className="text-xl font-semibold text-foreground">Processing Image</h2>
-                      <p className="text-muted-foreground text-sm mt-1 font-mono">
-                        {selectedFile.name}
+        <main className="relative flex-1 flex flex-col items-center justify-center p-6 md:py-24 z-10">
+          {/* Content Layer */}
+          <div className="relative w-full z-10">
+            <motion.div
+              layout
+              className={`w-full mx-auto ${selectedFile ? "max-w-5xl" : "max-w-2xl"}`}
+            >
+              <AnimatePresence mode="wait">
+                {!selectedFile ? (
+                  <motion.div
+                    key="upload"
+                    layout
+                    initial={{ opacity: 0, scale: 0.98, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.98, y: -10 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="bg-surface-card/40 dark:bg-surface-dark-elevated/40 backdrop-blur-3xl rounded-[20px] p-10 md:p-12 border border-hairline/60 dark:border-white/10 text-center relative overflow-hidden shadow-2xl transition-all duration-300"
+                  >
+                    <div className="mb-10 space-y-6">
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary text-on-primary text-xs font-medium uppercase tracking-widest shadow-sm">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        Easy & simple compression
+                      </div>
+                      <h2 className="text-4xl md:text-[56px] font-serif tracking-tight leading-[1.05] text-ink pb-2">
+                        Meet your <br />image partner
+                      </h2>
+                      <p className="text-body text-lg max-w-lg mx-auto">
+                        Compress, resize, and convert formats directly in your browser. No data leaves your device.
                       </p>
                     </div>
-                    <motion.button
-                      layout
-                      whileHover={{ scale: 1.1, rotate: 90 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={handleClear}
-                      className="text-muted-foreground hover:text-destructive transition-colors p-2 rounded-full hover:bg-destructive/10"
-                      title="Clear and upload new image"
-                    >
-                      <X className="h-5 w-5" />
-                    </motion.button>
-                  </div>
-
-                  {/* Options */}
-                  <div className="p-6 border-b border-border/50 bg-card/50">
-                    <ProcessingOptionsComponent
-                      options={options}
-                      onOptionsChange={handleOptionsChange}
-                      onProcess={handleProcess}
-                      isProcessing={isProcessing}
-                      disabled={isProcessing}
-                    />
-                  </div>
-
-                  {/* Preview */}
-                  <div className="p-6 bg-background/50">
-                    <ImagePreview originalFile={selectedFile} processedImage={processedImage} />
-                  </div>
-
-                  {/* Download */}
-                  <AnimatePresence>
-                    {processedImage && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="p-6 border-t border-border/50 bg-green-50/10"
+                    <FileUpload onFileSelect={handleFileSelect} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="processing"
+                    layout
+                    initial={{ opacity: 0, scale: 0.98, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.98, y: -10 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="bg-surface-card/40 dark:bg-surface-dark-elevated/40 backdrop-blur-3xl text-ink rounded-[20px] shadow-2xl overflow-hidden border border-hairline/60 dark:border-white/10 flex flex-col relative transition-all duration-300"
+                  >
+                    {/* Header with filename and clear button */}
+                    <div className="flex justify-between items-center px-6 py-4 border-b border-hairline/40 bg-surface-soft/40 backdrop-blur-md transition-colors duration-300">
+                      <h2 className="text-sm font-medium tracking-wide font-mono text-ink truncate max-w-[200px] md:max-w-xs">
+                        {selectedFile.name}
+                      </h2>
+                      <motion.button
+                        layout
+                        whileHover={{ scale: 1.05, rotate: 90 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleClear}
+                        className="text-muted hover:text-error transition-colors p-1.5 rounded-md hover:bg-error/10"
+                        title="Clear and upload new image"
                       >
-                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                          <div className="flex items-center gap-2 text-green-600">
-                            <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                            <p className="text-sm font-medium">Processing complete!</p>
-                          </div>
-                          <DownloadButton processedImage={processedImage} size="md" />
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+                        <X className="h-4 w-4" />
+                      </motion.button>
+                    </div>
 
-          <CanvasElement />
-        </div>
-      </main>
+                    <div className="flex flex-col md:flex-row">
+                      {/* Options Panel */}
+                      <div className="md:w-80 border-b md:border-b-0 md:border-r border-hairline/40 bg-surface-card/30 backdrop-blur-md p-6 transition-colors duration-300">
+                        <div className="text-ink">
+                          <ProcessingOptionsComponent
+                            options={options}
+                            onOptionsChange={handleOptionsChange}
+                            onProcess={handleProcess}
+                            isProcessing={isProcessing}
+                            disabled={isProcessing}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Preview Area */}
+                      <div className="flex-1 bg-surface-soft/30 backdrop-blur-md p-6 md:p-8 flex items-center justify-center min-h-[400px] transition-colors duration-300">
+                        <ImagePreview originalFile={selectedFile} processedImage={processedImage} />
+                      </div>
+                    </div>
+
+                    {/* Download Bar */}
+                    <AnimatePresence>
+                      {processedImage && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="px-6 py-4 border-t border-hairline bg-success/10 transition-colors duration-300"
+                        >
+                          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                              <div className="relative flex h-2.5 w-2.5">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-success"></span>
+                              </div>
+                              <p className="font-mono text-sm tracking-wide text-success">Output Ready</p>
+                            </div>
+                            <DownloadButton processedImage={processedImage} size="lg" className="shadow-none bg-primary hover:bg-primary-active text-on-primary font-medium tracking-wide rounded-md px-6 py-2 transition-colors" />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            <CanvasElement />
+          </div>
+        </main>
+      </div>
 
       <Footer />
-    </div >
+    </div>
   );
 }
